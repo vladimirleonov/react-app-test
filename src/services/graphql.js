@@ -1,42 +1,51 @@
 import axios from "axios";
 import config from "../config";
-import { store } from "../redux/index";
 
 const api = axios.create({
-    baseURL: config.authUrl
-    // withCredentials: true
+  baseURL: config.authUrl,
 });
 
 api.interceptors.request.use((config) => {
-    if (config.headers === undefined) {
-        config.headers = {};
-    }
+  if (config.headers === undefined) {
+    config.headers = {};
+  }
 
-    const accessToken = store.getState().auth.data.accessToken;
+  config.headers.Authorization = `Bearer ${
+    localStorage.getItem("token") || ""
+  }`;
 
-    config.headers.Authorization = `Bearer ${accessToken || ""}`;
-    return config;
+  return config;
 });
 
 export default class authService {
-    static async register(email, password) {
-        const query = `
+  static async register(email, password) {
+    const query = `
 			mutation {
 				register(email: "${email}", password: "${password}") {
 					access_token
 				}
 			}
 		`;
-        return api.post("", { query });
-    }
+    return api.post("", { query });
+  }
 
-    static async login(email, password) {
-        const query = `
+  static async login(email, password) {
+    const query = `
 			mutation {
 				login(email: "${email}", password: "${password}") {
 					access_token
 				}
 			}`;
-        return api.post("", { query });
-    }
+    return api.post("", { query });
+  }
+
+  static async checkAuth() {
+    const query = `
+					query {
+						auth {
+							access_token
+						}
+					}`;
+    return api.get(`?query=${encodeURIComponent(query)}`);
+  }
 }

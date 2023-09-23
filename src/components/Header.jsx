@@ -14,7 +14,7 @@ import AddPost from "./AddPost";
 import DeletePosts from "./DeletePosts";
 import ErrorForm from "./ErrorForm";
 
-import { logout, selectIsAuth, selectUserLogin, selectAuthError } from "../redux/slices/authSlice";
+import { logout, selectIsAuth, selectUserLogin, selectAuthError, checkAuth } from "../redux/slices/authSlice";
 import { selectPostsError } from "../redux/slices/postsSlice";
 
 const Header = () => {
@@ -31,6 +31,10 @@ const Header = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        dispatch(checkAuth());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (postsError || authError) {
             setErrorFormOpen(true);
         }
@@ -38,13 +42,19 @@ const Header = () => {
 
     useEffect(() => {
         if (isAuth) {
+            const isAuthenticatedOnReload = localStorage.getItem('isAuthenticatedOnReload');
+            if (!isAuthenticatedOnReload) {
             showAuthenticationSuccessToast();
+            localStorage.setItem('isAuthenticatedOnReload', 'true'); 
+            }
         }
     }, [isAuth]);
 
     const onClickLogout = () => {
         if (window.confirm("Do you really want to log out?")) {
             dispatch(logout());
+            localStorage.removeItem("token");
+            localStorage.removeItem('isAuthenticatedOnReload');
         }
     };
 
@@ -76,10 +86,10 @@ const Header = () => {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={5.9} justifyContent="center" alignItems="center">
+                        <Grid item xs={4} justifyContent="center" alignItems="center">
                             <Typography sx={{ mb: "7px" }}>News</Typography>
                         </Grid>
-                        <Grid container xs={5.5} sx={{ height: "100%" }} justifyContent="flex-end">
+                        <Grid container xs={7.4} sx={{ height: "100%" }} justifyContent="flex-end">
                             {isAuth ? (
                                 <>
                                     {login && (
