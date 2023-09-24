@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Проект на React с JWT, WebSocket и GraphQL с использованием Redux Toolkit
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Этот проект представляет собой веб-приложение, разработанное с использованием фреймворка React и библиотеки Redux Toolkit. Он демонстрирует следующие возможности:
 
-## Available Scripts
+- **Аутентификация пользователей** с использованием JSON Web Tokens (JWT).
+- **WebSocket** для взаимодействия в реальном времени.
+- **GraphQL** для реализации аутентификации.
+- **Docker** для упаковки приложения в контейнер.
 
-In the project directory, you can run:
+## Установка и запуск
 
-### `npm start`
+Чтобы установить и запустить проект, выполните следующие шаги:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Установите зависимости:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ ```bash
+ npm install
+ ```
 
-### `npm test`
+2. Запустите проект:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ ```bash
+ npm start
+ ```
 
-### `npm run build`
+3. Возможно, потребуется запустить:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm audit fix
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## JWT и Аутентификация
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Аутентификация пользователей осуществляется через JWT. При перезагрузке страницы сервер выполняет проверку проверку аутентификации на основе переданного токена в заголовке запроса.
 
-### `npm run eject`
+## WebSocket
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Для обмена данными (добавления и удаления постов) в реальном времени используется WebSocket. Подключение настроено на wss://ws.postman-echo.com/raw. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## GraphQL
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Аутентификация также реализована через GraphQL с использованием Redux Toolkit.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Docker
 
-## Learn More
+Для сборки и запуска контейнера выполните следующие команды:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Сборка Docker-образа:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+docker build -t имя_вашего_образа .
+```
 
-### Code Splitting
+2. Запуск контейнера:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+docker run -p 80:80 --name имя_вашего_контейнера имя_вашего_образа
+```
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
